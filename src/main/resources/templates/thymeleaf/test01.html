@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Thymeleaf 변수와 조건문</title>
+</head>
+<body>
+	<h2>Thymeleaf 변수와 조건문</h2>
+	
+	<th:block th:with="number1=36, number2=3">
+		<h3>1. 변수</h3>
+		
+		<h4 th:text="|첫번째 숫자 : ${number1}|"></h4>
+		<h4 th:text="|두번째 숫자 : ${number2}|"></h4>
+		
+		<h3>2. 산술연산</h3>
+		<h4 th:text="|더하기 : ${number1 + number2}|"></h4>
+		<h4 th:text="|빼기 : ${number1 - number2}|"></h4>
+		<h4 th:text="|곱하기 : ${number1 * number2}|"></h4>
+		<h4 th:text="|나누기 : ${number1 / number2}|"></h4>
+		
+		<h3>3. 태그 그대로 출력</h3>
+		<div th:utext="'<h3>안녕하세요</h3>'"></div>
+		
+		<h3>4. if와 unless</h3>
+		<th:block th:with="average=${(number1 + number2) / 2.0}">
+			<h1 th:if="${average >= 10}" th:text="${average}"></h1>
+			<h3 th:unless="${average >= 10}" th:text="${average}"></h3>
+		</th:block>
+	</th:block>
+
+</body>
+</html>
