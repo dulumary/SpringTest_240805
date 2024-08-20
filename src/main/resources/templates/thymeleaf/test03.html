@@ -32,7 +32,9 @@
 						<span th:unless="${#strings.startsWith(member.phoneNumber, '010')}">유효하지 않은 전화번호</span>
 					</td>
 					<td th:text="${#strings.replace(member.nationality, '삼국시대', '삼국 - ')}">대한민국</td>
-					<td th:text="${member.email}">lecture@hagulu.com</td>
+					<td>
+						<b th:text="${#strings.arraySplit(member.email, '@')[0]}"></b>@<span th:text="${#strings.arraySplit(member.email, '@')[1]}"></span>
+					</td>
 					<!-- <td th:text="${#strings.abbreviate(member.introduce, 15)}"></td>  --> 
 					<td>
 						<span th:if="${#strings.length(member.introduce) < 15}" th:text="${member.introduce}"></span>
