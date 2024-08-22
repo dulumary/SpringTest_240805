@@ -37,27 +37,21 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>2024년 8월 20일</td>
-							<td>
-								<img alt="맑음" src="http://marondal.com/material/images/dulumary/web/jstl/sunny.jpg">
+						<tr th:each="weather:${weatherhistory}">
+							<td th:text="${#temporals.format(weather.date, 'yyyy년 M월 d일')}">2024년 8월 20일</td>
+							<td th:switch="${weather.weather}">
+								<img th:case="맑음" alt="맑음" src="http://marondal.com/material/images/dulumary/web/jstl/sunny.jpg">
+								<img th:case="구름조금" alt="구름조금" src="http://marondal.com/material/images/dulumary/web/jstl/partlyCloudy.jpg">
+								<img th:case="흐림" alt="흐림" src="http://marondal.com/material/images/dulumary/web/jstl/cloudy.jpg">
+								<img th:case="비" alt="비" src="http://marondal.com/material/images/dulumary/web/jstl/rainy.jpg">
+								<span th:case="*" th:text="${weather.weather}"></span>
 							</td>
-							<td>35.8°C</td>
-							<td>0.0mm</td>
-							<td>좋음</td>
-							<td>2.2km/h</td>
+							<td th:text="|${weather.temperatures}°C|">35.8°C</td>
+							<td th:text="|${weather.precipitation}mm|">0.0mm</td>
+							<td th:text="${weather.microDust}">좋음</td>
+							<td th:text="|${weather.windSpeed}km/h|">2.2km/h</td>
 						</tr>
-						<tr>
-							<td>2024년 8월 19일</td>
-							<td>
-								<img alt="비" src="http://marondal.com/material/images/dulumary/web/jstl/rainy.jpg">
-							</td>
-							<td>33.8°C</td>
-							<td>12.8mm</td>
-							<td>좋음</td>
-							<td>3.1km/h</td>
-						</tr>
-					
+						
 					</tbody>
 				</table>
 			</section>
