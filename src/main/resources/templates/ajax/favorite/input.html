@@ -13,8 +13,12 @@
 		<label>제목</label>
 		<input type="text" class="form-control" id="nameInput">
 		<label>주소</label>
-		<input type="text" class="form-control" id="addressInput">
-		
+		<div class="d-flex">
+			<input type="text" class="form-control" id="addressInput">
+			<button type="button" class="btn btn-success col-2 ml-3" id="duplicateBtn">중복확인</button>
+		</div>
+		<div class="small text-danger d-none" id="duplicateText">중복된 url 입니다</div>
+		<div class="small text-success d-none" id="availableText">저장 가능한 url 입니다.</div>
 		<button type="button" id="addBtn" class="btn btn-success btn-block mt-3">추가</button>
 	</div>
 
@@ -25,6 +29,47 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 <script>
 	$(document).ready(function() {
+		
+		$("#duplicateBtn").on("click", function() {
+			let address = $("#addressInput").val();
+			
+			if(address == "") {
+				alert("주소를 입력하세요");
+				return ;
+			}
+			
+			// http:// 로 시작하지 않는다 그리고  https:// 로 시작하지 않는다. 
+			if(!address.startsWith("http://") && !address.startsWith("https://")) {
+				alert("주소를 확인해주세요");
+				return;
+			}
+			
+			$.ajax({
+				type:"post"
+				, url:"/ajax/favorite/duplicate-url"
+				, data:{"url":address}
+				, success:function(data) {
+					// {"isDuplicate":true}
+					// {"isDuplicate":false}
+					
+					if(data.isDuplicate) {
+						// 중복
+						$("#duplicateText").removeClass("d-none");
+						$("#availableText").addClass("d-none");
+					} else {
+						// 중복 아님
+						$("#availableText").removeClass("d-none");
+						$("#duplicateText").addClass("d-none");
+					}
+				}
+				, error:function() {
+					alert("중복확인 에러!");
+				}
+			});
+			
+			
+		});
+		
 		$("#addBtn").on("click", function() {
 			let name = $("#nameInput").val();
 			let address = $("#addressInput").val();
