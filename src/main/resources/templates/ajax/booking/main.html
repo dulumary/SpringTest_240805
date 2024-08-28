@@ -76,7 +76,38 @@
 
         <script>
             $(document).ready(function() {
-
+				$("#searchBtn").on("click", function() {
+					let name = $("#nameInput").val();
+					let phoneNumber = $("#phoneNumberInput").val();
+					
+					if(name == "") {
+						alert("이름을 입력하세요");
+						return;
+					}
+					
+					if(phoneNumber == "") {
+						alert("전화번호를 입력하세요");
+						return;
+					}
+					
+					$.ajax({
+						type:"get"
+						, url:"/ajax/booking/search"
+						, data:{"name":name, "phoneNumber":phoneNumber}
+						, success:function(data) {
+							
+							if(data.result == "success") {
+								alert("이름 : " + data.booking.name + "\n날짜 : " + data.booking.date + "\n전화번호 : " + data.booking.phoneNumber)	
+							} else {							
+								alert("조회된 데이터가 없습니다!!");
+							}
+							
+						}
+						, error:function() {
+							alert("조회 에러!!");
+						}
+					});
+				});
             
             });
         </script>
